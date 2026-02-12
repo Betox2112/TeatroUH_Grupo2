@@ -1,0 +1,51 @@
+﻿@model TeatroUH.Application.DTOs.RegisterDTO
+
+@{
+    ViewData["Title"] = "Crear cuenta";
+}
+
+<div class="max-w-md mx-auto px-6 py-10">
+
+    <h1 class="text-2xl font-semibold text-white mb-6">
+        Crear cuenta
+    </h1>
+
+    <form asp-action="Register" method="post" class="space-y-4">
+        @Html.AntiForgeryToken()
+
+        <div>
+            <label asp-for="Nombre" class="block text-sm text-gray-300 mb-1"></label>
+            <input asp-for="Nombre"
+                   class="w-full rounded-md bg-black/30 border border-white/15 px-3 py-2 text-white" />
+            <span asp-validation-for="Nombre" class="text-sm text-red-400"></span>
+        </div>
+
+        <div>
+            <label asp-for="Email" class="block text-sm text-gray-300 mb-1"></label>
+            <input asp-for="Email" type="email"
+                   class="w-full rounded-md bg-black/30 border border-white/15 px-3 py-2 text-white" />
+            <span asp-validation-for="Email" class="text-sm text-red-400"></span>
+        </div>
+
+        <div>
+            <label asp-for="Password" class="block text-sm text-gray-300 mb-1"></label>
+            <input asp-for="Password" type="password"
+                   class="w-full rounded-md bg-black/30 border border-white/15 px-3 py-2 text-white" />
+            <span asp-validation-for="Password" class="text-sm text-red-400"></span>
+        </div>
+
+        <!-- Google reCAPTCHA -->
+        <div class="g-recaptcha" data-sitekey="6Lc7p2gsAAAAAEE4A0JYOPH142Lqa9ccf2DTopd1"></div>
+        <span class="text-danger" asp-validation-summary="ModelOnly"></span>
+
+        <button type="submit"
+                class="w-full mt-4 rounded-lg py-2 font-semibold bg-[#C9A24D] text-black">
+            Crear cuenta
+        </button>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+}

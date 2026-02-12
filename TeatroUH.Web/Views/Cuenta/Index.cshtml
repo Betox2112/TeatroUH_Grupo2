@@ -1,0 +1,144 @@
+﻿@{
+    ViewData["Title"] = "Mi Cuenta";
+    var email = ViewBag.Email as string;
+    var role = ViewBag.Role as string;
+    var isLogged = !string.IsNullOrEmpty(email);
+}
+
+<div class="account-page">
+
+    <!-- HEADER -->
+    <div class="account-header">
+        <div>
+            <h1 class="account-title">Mi Cuenta</h1>
+            <p class="account-subtitle">
+                Administrá tu acceso y continuá con tus reservas en el Teatro Nacional.
+            </p>
+        </div>
+
+        <div class="account-badges">
+            <span class="badge badge-gold">Teatro Nacional</span>
+
+            @if (isLogged)
+            {
+                <span class="badge badge-dark">Sesión activa</span>
+
+                @if (role == "Admin")
+                {
+                    <span class="badge badge-admin">Administrador</span>
+                }
+            }
+            else
+            {
+                <span class="badge badge-muted">Invitado</span>
+            }
+        </div>
+    </div>
+
+    <!-- CONTENIDO -->
+    @if (isLogged)
+    {
+        <!-- =========================
+             USUARIO LOGUEADO
+        ========================== -->
+        <section class="card card-glow max-w-xl">
+            <div class="card-head">
+                <div class="card-icon">👤</div>
+                <div>
+                    <h2 class="card-title">Sesión iniciada</h2>
+                    <p class="card-desc">Información de tu cuenta actual.</p>
+                </div>
+            </div>
+
+            <div class="account-info">
+                <div class="info-line">
+                    <span class="info-k">Correo</span>
+                    <span class="info-v">@email</span>
+                </div>
+
+                <div class="info-line">
+                    <span class="info-k">Rol</span>
+                    <span class="info-v">@role</span>
+                </div>
+
+                <div class="actions">
+                    <a asp-controller="Funciones" asp-action="Index"
+                       class="btn btn-gold w-100">
+                        Ver funciones disponibles
+                    </a>
+
+                    <a asp-controller="Carrito" asp-action="Index"
+                       class="btn btn-outline w-100">
+                        Ir al carrito
+                    </a>
+
+                    <a asp-controller="Cuenta" asp-action="MisReservas"
+                       class="w-full inline-flex items-center justify-center rounded-lg py-2.5 font-semibold
+                        border border-white/15 bg-black/30 text-white hover:bg-black/40 transition">
+                        Historial de reservas
+                    </a>
+
+
+                    @if (role == "Admin")
+                    {
+                        <a asp-controller="Admin" asp-action="Index"
+                           class="btn btn-admin w-100">
+                            Panel de administración
+                        </a>
+                    }
+
+                    <a asp-controller="Cuenta" asp-action="Logout"
+                       class="btn btn-dark w-100">
+                        Cerrar sesión
+                    </a>
+                </div>
+            </div>
+        </section>
+    }
+    else
+    {
+        <!-- =========================
+             USUARIO INVITADO
+        ========================== -->
+        <div class="account-grid max-w-3xl">
+
+            <!-- LOGIN -->
+            <section class="card card-glow">
+                <div class="card-head">
+                    <div class="card-icon">🔐</div>
+                    <div>
+                        <h2 class="card-title">Iniciar sesión</h2>
+                        <p class="card-desc">
+                            Accedé a tu cuenta para comprar entradas y gestionar reservas.
+                        </p>
+                    </div>
+                </div>
+
+                <a asp-controller="Cuenta" asp-action="Login"
+                   class="btn btn-gold w-100">
+                    Login
+                </a>
+            </section>
+
+            <!-- REGISTER -->
+            <section class="card">
+                <div class="card-head">
+                    <div class="card-icon">🪪</div>
+                    <div>
+                        <h2 class="card-title">Crear cuenta</h2>
+                        <p class="card-desc">
+                            Registrate en el teatro y recibí confirmaciones por correo.
+                        </p>
+                    </div>
+                </div>
+
+                <a asp-controller="Cuenta" asp-action="Register"
+                   class="btn btn-outline w-100">
+                    Registrarse
+                </a>
+            </section>
+
+        </div>
+    }
+
+</div>

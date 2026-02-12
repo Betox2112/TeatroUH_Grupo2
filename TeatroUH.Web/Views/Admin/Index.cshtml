@@ -1,0 +1,47 @@
+﻿@{
+    ViewData["Title"] = "Administración";
+}
+
+<div class="p-8">
+    <h1 class="text-3xl font-bold text-white">Administración</h1>
+    <p class="text-gray-400 mt-1">Panel de control (CRUD) para gestionar el sistema.</p>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-8">
+
+        <!-- Usuarios -->
+        <a asp-controller="Admin" asp-action="Users"
+           class="card-theater p-5 rounded-lg block hover:shadow-lg">
+            <div class="text-[#B89B5E] font-bold text-lg">Usuarios y Permisos</div>
+            <div class="text-gray-400 mt-1 text-sm">Dar/Quitar Admin, ver usuarios.</div>
+        </a>
+
+        <!-- Obras -->
+        <a asp-controller="AdminPlays" asp-action="Index"
+           class="card-theater p-5 rounded-lg block hover:shadow-lg">
+            <div class="text-[#B89B5E] font-bold text-lg">Cartelera (Obras)</div>
+            <div class="text-gray-400 mt-1 text-sm">Crear/editar obras + subir foto.</div>
+        </a>
+
+        <!-- Funciones -->
+        <a asp-controller="AdminShowtimes" asp-action="Index"
+           class="card-theater p-5 rounded-lg block hover:shadow-lg">
+            <div class="text-[#B89B5E] font-bold text-lg">Funciones</div>
+            <div class="text-gray-400 mt-1 text-sm">Publicar funciones (obra + fecha + teatro).</div>
+        </a>
+
+        <!-- Teatros -->
+        <a asp-controller="AdminTheaters" asp-action="Index"
+           class="card-theater p-5 rounded-lg block hover:shadow-lg">
+            <div class="text-[#B89B5E] font-bold text-lg">Teatros / Salas</div>
+            <div class="text-gray-400 mt-1 text-sm">Capacidad, ubicación, activar/desactivar.</div>
+        </a>
+
+        <!-- Tickets -->
+        <a asp-controller="AdminTicketTypes" asp-action="Index"
+           class="card-theater p-5 rounded-lg block hover:shadow-lg">
+            <div class="text-[#B89B5E] font-bold text-lg">Tipos de Ticket</div>
+            <div class="text-gray-400 mt-1 text-sm">General/VIP y factores de precio.</div>
+        </a>
+
+    </div>
+</div>

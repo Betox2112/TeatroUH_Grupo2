@@ -1,0 +1,42 @@
+﻿@model TeatroUH.Domain.Entities.NewsItem
+@{
+    ViewData["Title"] = "Crear Noticia";
+}
+
+<div class="news-form">
+    <h1 class="news-title">Crear noticia</h1>
+
+    <form asp-action="Crear" method="post" class="card news-form-card">
+        <label class="form-label">Título</label>
+        <input class="form-input" name="Title" value="@Model.Title" />
+
+        <label class="form-label">Resumen</label>
+        <input class="form-input" name="Summary" value="@Model.Summary" />
+
+        <label class="form-label">Contenido</label>
+        <textarea class="form-input" name="Content" rows="6">@Model.Content</textarea>
+
+        <label class="form-label">Imagen (URL)</label>
+        <input class="form-input" name="ImageUrl" value="@Model.ImageUrl" />
+
+        <div class="news-form-row">
+            <div>
+                <label class="form-label">Fecha publicación</label>
+                <input class="form-input" type="datetime-local" name="PublishedAt"
+                       value="@Model.PublishedAt.ToString("yyyy-MM-ddTHH:mm")" />
+            </div>
+
+            <div class="toggle">
+                <label class="form-label">Activa</label>
+                <input type="checkbox" name="IsActive" value="true" @(Model.IsActive ? "checked" : "") />
+            </div>
+        </div>
+
+        <div class="news-form-actions">
+            <a class="btn btn-outline" asp-action="Index">Cancelar</a>
+            <button class="btn btn-gold" type="submit">Guardar</button>
+        </div>
+
+        <div class="text-red-400">@Html.ValidationSummary()</div>
+    </form>
+</div>

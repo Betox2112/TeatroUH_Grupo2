@@ -1,0 +1,49 @@
+﻿@{
+    ViewData["Title"] = "Inicio";
+}
+
+<div class="home-bg">
+    <div class="home-overlay">
+        <div class="home-center">
+
+            <!-- Bloque para mostrar mensajes de éxito -->
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <div class="alert alert-success text-center mb-4">
+                    @TempData["SuccessMessage"]
+                </div>
+            }
+
+            <section class="w-full max-w-xl">
+                <div class="rounded-xl border border-gray-700 bg-black/60 backdrop-blur-sm p-8 text-center">
+                    <h1 class="text-2xl font-bold tracking-tight text-white">
+                        Visitas Guiadas
+                    </h1>
+
+                    <p class="mt-2 text-gray-300">
+                        Todos los días
+                    </p>
+
+                    <p class="mt-6 text-gray-300">
+                        Bienvenido. Seleccioná una opción:
+                    </p>
+
+                    <div class="mt-6 flex flex-col gap-3">
+                        <a asp-controller="Obras"
+                           asp-action="Index"
+                           class="w-full rounded-lg bg-white/10 py-3 font-semibold text-white hover:bg-white/20 transition">
+                            Cartelera
+                        </a>
+
+                        <a asp-controller="Funciones"
+                           asp-action="Index"
+                           class="w-full rounded-lg bg-white/10 py-3 font-semibold text-white hover:bg-white/20 transition">
+                            Funciones
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </div>
+</div>

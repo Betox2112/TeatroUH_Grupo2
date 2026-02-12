@@ -1,0 +1,123 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>@ViewData["Title"] - Teatro</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- CSS global -->
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+
+    <style>
+        body {
+            background-color: #0a0a0a;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        .sidebar {
+            background-color: #121212;
+            border-right: 1px solid #222;
+        }
+
+        .accent-teal {
+            color: #B89B5E;
+        }
+
+        .bg-accent-teal {
+            background-color: #B89B5E;
+        }
+
+        .card-theater {
+            background-color: rgba(255,255,255,0.03);
+            border: 1px solid #333;
+            transition: all 0.3s ease;
+        }
+
+            .card-theater:hover {
+                border-color: #B89B5E;
+                transform: translateY(-4px);
+            }
+    </style>
+</head>
+
+<body class="flex min-h-screen">
+
+    <!-- SIDEBAR -->
+    <aside class="w-64 sidebar hidden md:flex flex-col p-6 sticky top-0 h-screen">
+        <div class="mb-10 text-2xl font-bold tracking-tighter accent-teal">
+            TEATRO NACIONAL
+        </div>
+
+        @{
+            var email = Context.Session.GetString("USER_EMAIL");
+            var role = Context.Session.GetString("USER_ROLE");
+
+            var isLogged = !string.IsNullOrEmpty(email);
+            var isAdmin = isLogged && string.Equals(role, "Admin", StringComparison.OrdinalIgnoreCase);
+        }
+
+        <nav class="flex-1 space-y-4">
+            <a asp-controller="Home" asp-action="Index" class="block text-gray-400 hover:text-white transition">
+                Inicio
+            </a>
+
+            <a asp-controller="Obras" asp-action="Index" class="block text-gray-400 hover:text-white transition">
+                Cartelera
+            </a>
+
+            <a asp-controller="AdminShowtimes" asp-action="Index">
+                Funciones
+            </a>
+
+            <a asp-controller="Cuenta" asp-action="Index" class="block text-gray-400 hover:text-white transition">
+                Mi Cuenta
+            </a>
+
+            <a asp-controller="Noticias" asp-action="Index" class="block text-gray-400 hover:text-white transition">
+                Noticias
+            </a>
+
+            @* 🛡️ Solo Admin *@
+            @if (isAdmin)
+            {
+                <a asp-controller="Admin" asp-action="Index" class="block text-gray-400 hover:text-white transition">
+                    Administración
+                </a>
+            }
+        </nav>
+
+        <!-- 🔐 Zona inferior -->
+        <div class="mt-auto pt-6 border-t border-gray-800">
+            @if (!isLogged)
+            {
+                <a asp-controller="Cuenta"
+                   asp-action="Login"
+                   class="w-full block text-center bg-accent-teal text-black font-bold py-2 rounded">
+                    Iniciar sesión
+                </a>
+            }
+            else
+            {
+                <a asp-controller="Cuenta"
+                   asp-action="Logout"
+                   class="w-full block text-center bg-accent-teal text-black font-bold py-2 rounded">
+                    Cerrar sesión
+                </a>
+            }
+        </div>
+    </aside>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="flex-1">
+        @RenderBody()
+    </main>
+
+    <!-- 👇 Aquí agregamos la sección Scripts -->
+    @RenderSection("Scripts", required: false)
+
+</body>
+</html>

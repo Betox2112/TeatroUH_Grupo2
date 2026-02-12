@@ -1,0 +1,546 @@
+/* =========================================================
+   CONFIGURACIÓN GENERAL
+   ========================================================= */
+
+/* Tamaño base de fuente */
+html {
+    font-size: 14px;
+}
+
+/* Tamaño de fuente para pantallas medianas/grandes */
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+/* Estructura base del documento */
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+/* Espacio inferior para footer */
+body {
+    margin-bottom: 60px;
+}
+
+/* =========================================================
+   HOME / INICIO
+   ========================================================= */
+
+/* Fondo principal de la página de inicio */
+.home-bg {
+    width: 100%;
+    min-height: 100vh;
+    background-image: url('/images/inicio.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* Capa oscura encima del fondo */
+.home-overlay {
+    width: 100%;
+    min-height: 100vh;
+    background: rgba(0, 0, 0, 0.55);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+}
+
+/* Contenedor central */
+.home-center {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+/* =========================================================
+   CARTELERA
+   ========================================================= */
+
+/* Fondo de la cartelera */
+.cartelera-bg {
+    width: 100%;
+    min-height: 100vh;
+    background-image: url('/images/cartelera.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* Overlay con degradado para la cartelera */
+.cartelera-overlay {
+    width: 100%;
+    min-height: 100vh;
+    background: linear-gradient( rgba(0, 0, 0, 0.78), rgba(0, 0, 0, 0.88) );
+    padding: 60px 24px;
+}
+
+/* =========================================================
+   FUNCIONES
+   Usa la imagen de inicio, pero con efecto distinto
+   ========================================================= */
+
+/* Contenedor principal de funciones */
+.funciones-bg {
+    width: 100%;
+    min-height: 100vh;
+    position: relative;
+    overflow: hidden;
+}
+
+    /* Fondo con imagen (variante del inicio) */
+    .funciones-bg::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image: url('/images/inicio.jpg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        /* Efectos para diferenciarlo del inicio */
+        filter: saturate(0.9) contrast(1.05) brightness(0.75) blur(2px);
+        /* Evita bordes raros por el blur */
+        transform: scale(1.03);
+        z-index: 0;
+    }
+
+    /* Vignette + degradado para dar profundidad */
+    .funciones-bg::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient( circle at 50% 20%, rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.85) 70% ), linear-gradient( to bottom, rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.85) );
+        z-index: 0;
+    }
+
+/* Contenido real de la página de funciones */
+.funciones-overlay {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    min-height: 100vh;
+    padding: 40px 24px;
+    display: flex;
+    align-items: flex-start;
+}
+/* =========================================================
+   MI CUENTA (ESTO ES LO QUE TE FALTA)
+   Se aplica solo si tu Index.cshtml usa estas clases:
+   account-page, card, btn, etc.
+   ========================================================= */
+
+.account-page {
+    padding: 18px 18px 28px;
+}
+
+/* Header */
+.account-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 14px;
+    margin-bottom: 14px;
+}
+
+.account-title {
+    color: #f2f2f2;
+    margin: 0;
+    font-size: 34px;
+    letter-spacing: .3px;
+}
+
+.account-subtitle {
+    margin: 6px 0 0;
+    color: rgba(255,255,255,.70);
+    max-width: 720px;
+    line-height: 1.4;
+}
+
+.account-badges {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
+/* Badges */
+.badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    letter-spacing: .2px;
+    border: 1px solid rgba(255,255,255,.12);
+    background: rgba(0,0,0,.35);
+    color: rgba(255,255,255,.86);
+    backdrop-filter: blur(6px);
+}
+
+.badge-gold {
+    border-color: rgba(197,153,73,.35);
+    color: #f0d9a7;
+    background: rgba(197,153,73,.12);
+}
+
+.badge-admin {
+    border-color: rgba(110,193,255,.35);
+    background: rgba(110,193,255,.12);
+    color: rgba(199,235,255,.95);
+}
+
+.badge-dark {
+    border-color: rgba(255,255,255,.12);
+    background: rgba(0,0,0,.55);
+}
+
+.badge-muted {
+    color: rgba(255,255,255,.60);
+}
+
+/* Layout */
+.account-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+@media (max-width: 900px) {
+    .account-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Cards */
+.card {
+    border: 1px solid rgba(255,255,255,.10);
+    background: rgba(0,0,0,.45);
+    border-radius: 16px;
+    padding: 16px;
+    box-shadow: 0 14px 35px rgba(0,0,0,.35);
+}
+
+.card-glow {
+    border-color: rgba(197,153,73,.25);
+    box-shadow: 0 20px 55px rgba(0,0,0,.45);
+}
+
+.card-head {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    margin-bottom: 12px;
+}
+
+.card-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    display: grid;
+    place-items: center;
+    background: rgba(197,153,73,.12);
+    border: 1px solid rgba(197,153,73,.25);
+    font-size: 18px;
+}
+
+.card-title {
+    margin: 0;
+    color: #fff;
+    font-size: 18px;
+    letter-spacing: .2px;
+}
+
+.card-desc {
+    margin: 6px 0 0;
+    color: rgba(255,255,255,.70);
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+/* Helpers */
+.max-w-xl {
+    max-width: 720px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.max-w-3xl {
+    max-width: 980px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.w-100 {
+    width: 100%;
+}
+
+/* Info */
+.account-info {
+    margin-top: 8px;
+}
+
+.info-line {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 10px 12px;
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,.10);
+    background: rgba(255,255,255,.03);
+    margin-bottom: 10px;
+}
+
+.info-k {
+    color: rgba(255,255,255,.65);
+    font-size: 13px;
+}
+
+.info-v {
+    color: #fff;
+    font-weight: 600;
+    font-size: 13px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 65%;
+    text-align: right;
+}
+
+/* Buttons */
+.actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 12px;
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 12px;
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,.14);
+    color: rgba(255,255,255,.92);
+    background: rgba(0,0,0,.35);
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: .2px;
+    transition: transform .08s ease, background .15s ease, border-color .15s ease;
+}
+
+    .btn:hover {
+        transform: translateY(-1px);
+        border-color: rgba(255,255,255,.22);
+        background: rgba(0,0,0,.55);
+    }
+
+    .btn:active {
+        transform: translateY(0px);
+    }
+
+.btn-gold {
+    border-color: rgba(197,153,73,.40);
+    background: rgba(197,153,73,.95);
+    color: #111;
+}
+
+    .btn-gold:hover {
+        background: rgba(197,153,73,1);
+        border-color: rgba(197,153,73,.60);
+    }
+
+.btn-outline {
+    background: rgba(0,0,0,.15);
+    border-color: rgba(255,255,255,.18);
+    color: rgba(255,255,255,.92);
+}
+
+    .btn-outline:hover {
+        background: rgba(255,255,255,.06);
+        border-color: rgba(197,153,73,.35);
+    }
+
+.btn-dark {
+    background: rgba(0,0,0,.55);
+    border-color: rgba(255,255,255,.14);
+}
+
+.btn-admin {
+    border-color: rgba(110,193,255,.40);
+    background: rgba(110,193,255,.15);
+    color: rgba(220,245,255,.95);
+}
+
+    .btn-admin:hover {
+        background: rgba(110,193,255,.22);
+        border-color: rgba(110,193,255,.55);
+    }
+
+
+/* ===== NOTICIAS PRO (similar a cartelera, pero no igual) ===== */
+
+.news-wrap {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 26px 22px;
+}
+
+.news-hero {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 16px;
+    padding: 18px 18px;
+    border-radius: 16px;
+    border: 1px solid rgba(255,255,255,.10);
+    background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+    box-shadow: 0 10px 30px rgba(0,0,0,.35);
+    margin-bottom: 18px;
+}
+
+.news-h1 {
+    margin: 0;
+    color: #fff;
+    font-size: 34px;
+    font-weight: 900;
+    letter-spacing: .2px;
+}
+
+.news-sub {
+    margin: 6px 0 0 0;
+    color: rgba(255,255,255,.72);
+    font-size: .95rem;
+}
+
+.news-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: flex-end;
+}
+
+.news-pill {
+    display: inline-flex;
+    gap: .45rem;
+    align-items: center;
+    padding: .35rem .7rem;
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,.12);
+    background: rgba(255,255,255,.04);
+    color: rgba(255,255,255,.82);
+    font-size: .85rem;
+    white-space: nowrap;
+}
+
+.news-list {
+    display: grid;
+    gap: 14px;
+    max-width: 860px;
+}
+
+.news-card {
+    border-radius: 18px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,.10);
+    background: rgba(18,18,18,.90);
+    box-shadow: 0 12px 35px rgba(0,0,0,.45);
+    padding: 16px 18px;
+    transition: transform .12s ease, border-color .12s ease, box-shadow .12s ease, background .12s ease;
+}
+
+    .news-card:hover {
+        transform: translateY(-2px);
+        border-color: rgba(184,155,94,.55);
+        box-shadow: 0 16px 40px rgba(0,0,0,.55);
+        background: rgba(18,18,18,.94);
+    }
+
+.news-top {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.news-date {
+    display: inline-block;
+    font-size: 12px;
+    letter-spacing: .3px;
+    color: rgba(255,255,255,.70);
+    background: rgba(184,155,94,.10);
+    border: 1px solid rgba(184,155,94,.25);
+    padding: 6px 10px;
+    border-radius: 999px;
+}
+
+.news-title {
+    margin: 6px 0 8px 0;
+    color: #fff;
+    font-size: 18px;
+    font-weight: 900;
+    line-height: 1.2;
+}
+
+.news-summary {
+    margin: 0 0 12px 0;
+    color: rgba(255,255,255,.82);
+    line-height: 1.55;
+}
+
+.news-footer {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding-top: 10px;
+    border-top: 1px solid rgba(255,255,255,.06);
+}
+
+.news-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 900;
+    color: #B89B5E;
+    text-decoration: none;
+}
+
+    .news-link:hover {
+        text-decoration: underline;
+    }
+
+.news-arrow {
+    transition: transform .12s ease;
+}
+
+.news-link:hover .news-arrow {
+    transform: translateX(2px);
+}
+
+.news-empty {
+    border-radius: 16px;
+    border: 1px solid rgba(255,255,255,.10);
+    background: rgba(255,255,255,.03);
+    padding: 22px;
+    text-align: center;
+    color: rgba(255,255,255,.75);
+}
+
+@media (max-width:700px) {
+    .news-hero {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .news-pills {
+        justify-content: flex-start;
+    }
+}

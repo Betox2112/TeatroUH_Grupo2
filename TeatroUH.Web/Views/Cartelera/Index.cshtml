@@ -1,0 +1,273 @@
+﻿@model List<TeatroUH.Domain.Entities.Showtime>
+<div style="position:fixed;top:10px;right:10px;z-index:99999;background:yellow;color:black;padding:10px 14px;border-radius:10px;font-weight:900;">
+    CARTELERA NUEVA ✅
+</div>
+
+@{
+    ViewData["Title"] = "Cartelera";
+
+    // Ajustá estos factores si querés
+    decimal FactorNino = 0.80m;
+    decimal FactorAdultoMayor = 0.70m;
+
+    string ImgDefault = "https://images.unsplash.com/photo-1515165562835-c4c9b1d2bca8?auto=format&fit=crop&w=1400&q=60";
+}
+
+<style>
+    .wrap {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 22px 18px;
+    }
+
+    .hero {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        gap: 16px;
+        padding: 18px 18px;
+        border-radius: 16px;
+        border: 1px solid rgba(255,255,255,.10);
+        background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+        box-shadow: 0 10px 30px rgba(0,0,0,.35);
+        margin-bottom: 18px;
+    }
+
+        .hero h2 {
+            margin: 0;
+            color: #fff;
+            font-weight: 850;
+            letter-spacing: .2px;
+        }
+
+        .hero p {
+            margin: 6px 0 0 0;
+            color: rgba(255,255,255,.72);
+            font-size: .95rem;
+        }
+
+    .pill {
+        display: inline-flex;
+        gap: .45rem;
+        align-items: center;
+        padding: .35rem .7rem;
+        border-radius: 999px;
+        border: 1px solid rgba(255,255,255,.12);
+        background: rgba(255,255,255,.04);
+        color: rgba(255,255,255,.82);
+        font-size: .85rem;
+        white-space: nowrap;
+    }
+
+    .pills {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        justify-content: flex-end;
+    }
+
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0,1fr));
+        gap: 16px;
+    }
+
+    @@media (max-width:1100px) {
+        .grid {
+            grid-template-columns: repeat(2, minmax(0,1fr));
+        }
+    }
+
+    @@media (max-width:700px) {
+        .grid {
+            grid-template-columns: 1fr;
+        }
+
+        .hero {
+            align-items: flex-start;
+            flex-direction: column;
+        }
+
+        .pills {
+            justify-content: flex-start;
+        }
+    }
+
+    .cardx {
+        border-radius: 18px;
+        overflow: hidden;
+        border: 1px solid rgba(255,255,255,.10);
+        background: rgba(18,18,18,.92);
+        box-shadow: 0 12px 35px rgba(0,0,0,.45);
+        transition: transform .12s ease, border-color .12s ease, box-shadow .12s ease;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+
+        .cardx:hover {
+            transform: translateY(-2px);
+            border-color: rgba(255,255,255,.20);
+            box-shadow: 0 16px 40px rgba(0,0,0,.55);
+        }
+
+    .thumb {
+        height: 130px;
+        width: 100%;
+        object-fit: cover;
+        filter: saturate(1.05) contrast(1.05);
+    }
+
+    .body {
+        padding: 14px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        flex: 1;
+    }
+
+    .title {
+        font-weight: 850;
+        font-size: 1.02rem;
+        color: #fff;
+        line-height: 1.15;
+        margin: 0;
+    }
+
+    .muted {
+        color: rgba(255,255,255,.72);
+        font-size: .90rem;
+    }
+
+    .meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 2px;
+    }
+
+    .prices {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0,1fr));
+        gap: 10px;
+        margin-top: 2px;
+    }
+
+    @@media (max-width:420px) {
+        .prices {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .price {
+        border-radius: 14px;
+        border: 1px solid rgba(255,255,255,.10);
+        background: rgba(255,255,255,.03);
+        padding: 10px;
+        min-height: 62px;
+    }
+
+        .price .lbl {
+            color: rgba(255,255,255,.72);
+            font-size: .78rem;
+        }
+
+        .price .val {
+            font-weight: 900;
+            color: #fff;
+            margin-top: 2px;
+        }
+
+    .note {
+        border-left: 3px solid rgba(45,212,191,.75);
+        background: rgba(45,212,191,.06);
+        border-radius: 12px;
+        padding: 10px;
+        color: rgba(255,255,255,.78);
+        font-size: .86rem;
+    }
+
+    .empty {
+        border-radius: 16px;
+        border: 1px solid rgba(255,255,255,.10);
+        background: rgba(255,255,255,.03);
+        padding: 22px;
+        text-align: center;
+        color: rgba(255,255,255,.75);
+    }
+</style>
+
+<div class="wrap">
+
+    <div class="hero">
+        <div>
+            <h2>Cartelera</h2>
+            <p>Información de funciones disponibles y precios por categoría.</p>
+        </div>
+
+        <div class="pills">
+            <span class="pill">🎟️ Total funciones: @(Model?.Count ?? 0)</span>
+            <span class="pill">👨 Adulto</span>
+            <span class="pill">🧒 Niño</span>
+            <span class="pill">🧓 Adulto Mayor</span>
+        </div>
+    </div>
+
+    @if (Model == null || !Model.Any())
+    {
+        <div class="empty">No hay funciones disponibles por el momento.</div>
+    }
+    else
+    {
+        <div class="grid">
+            @foreach (var f in Model)
+            {
+                var titulo = f.Play?.Title ?? $"Obra #{f.PlayId}";
+                var teatro = f.Theater?.Name ?? $"Teatro #{f.TheaterId}";
+                var img = !string.IsNullOrWhiteSpace(f.Play?.ImageUrl) ? f.Play!.ImageUrl! : ImgDefault;
+
+                var adulto = f.BasePrice;
+                var nino = Math.Round(f.BasePrice * FactorNino, 2);
+                var adultoMayor = Math.Round(f.BasePrice * FactorAdultoMayor, 2);
+
+                // Texto pequeño abajo (usa description si existe)
+                var desc = !string.IsNullOrWhiteSpace(f.Play?.Description)
+                ? f.Play!.Description!
+                : "Entradas sujetas a disponibilidad. Llegá 20 minutos antes.";
+
+                <div class="cardx">
+                    <img class="thumb" src="@img" alt="Imagen de @titulo" />
+
+                    <div class="body">
+                        <div>
+                            <div class="title" title="@titulo">🎭 @titulo</div>
+                            <div class="muted" title="@teatro">🏛️ @teatro</div>
+
+                            <div class="meta">
+                                <span class="pill">📅 @f.StartDateTime.ToString("dd/MM/yyyy")</span>
+                                <span class="pill">🕒 @f.StartDateTime.ToString("hh:mm tt")</span>
+                            </div>
+                        </div>
+
+                        <div class="prices">
+                            <div class="price">
+                                <div class="lbl">Adulto (General)</div>
+                                <div class="val">₡@adulto.ToString("N2")</div>
+                            </div>
+                            <div class="price">
+                                <div class="lbl">Niño</div>
+                                <div class="val">₡@nino.ToString("N2")</div>
+                            </div>
+                            <div class="price">
+                                <div class="lbl">Adulto Mayor</div>
+                                <div class="val">₡@adultoMayor.ToString("N2")</div>
+                            </div>
+                        </div>
+
+                        <div class="note">@desc</div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>

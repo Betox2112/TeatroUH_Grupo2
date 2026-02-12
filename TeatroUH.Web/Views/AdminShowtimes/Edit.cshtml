@@ -1,0 +1,80 @@
+﻿@model TeatroUH.Domain.Entities.Showtime
+@{
+    ViewData["Title"] = "Editar función";
+    var plays = ViewBag.Plays as List<TeatroUH.Domain.Entities.Play>;
+    var theaters = ViewBag.Theaters as List<TeatroUH.Domain.Entities.Theater>;
+}
+
+<h2 class="text-white mb-3">Editar función</h2>
+
+<form asp-action="Edit" asp-route-id="@Model.ShowtimeId" method="post" class="text-white">
+    @Html.AntiForgeryToken()
+
+    <div class="mb-3">
+        <label class="form-label">Obra</label>
+        <select class="form-select bg-dark text-white" asp-for="PlayId">
+            @foreach (var p in plays ?? new())
+            {
+                <option value="@p.PlayId" selected="@(p.PlayId == Model.PlayId)">
+                    @p.Title
+                </option>
+            }
+        </select>
+        <span class="text-danger" asp-validation-for="PlayId"></span>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Teatro</label>
+        <select class="form-select bg-dark text-white" asp-for="TheaterId">
+            @foreach (var t in theaters ?? new())
+            {
+                <option value="@t.TheaterId" selected="@(t.TheaterId == Model.TheaterId)">
+                    @t.Name
+                </option>
+            }
+        </select>
+        <span class="text-danger" asp-validation-for="TheaterId"></span>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <label class="form-label">Fecha y hora</label>
+            <input class="form-control bg-dark text-white" asp-for="StartDateTime" type="datetime-local"
+                   value="@Model.StartDateTime.ToString("yyyy-MM-ddTHH:mm")" />
+            <span class="text-danger" asp-validation-for="StartDateTime"></span>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <label class="form-label">Precio base (₡)</label>
+            <input class="form-control bg-dark text-white" asp-for="BasePrice" />
+            <span class="text-danger" asp-validation-for="BasePrice"></span>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <label class="form-label">Capacidad</label>
+            <input class="form-control bg-dark text-white" asp-for="Capacity" />
+            <small class="text-secondary">Vendidos: @Model.SeatsSold</small>
+            <span class="text-danger" asp-validation-for="Capacity"></span>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <label class="form-label">Estado</label>
+            <input class="form-control bg-dark text-white" asp-for="Status" />
+            <span class="text-danger" asp-validation-for="Status"></span>
+        </div>
+    </div>
+
+    <div class="form-check mb-3">
+        <input class="form-check-input" asp-for="IsActive" />
+        <label class="form-check-label">Activa</label>
+    </div>
+
+    <button type="submit" class="btn btn-outline-warning">Guardar cambios</button>
+    <a class="btn btn-outline-secondary" asp-action="Index">Volver</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

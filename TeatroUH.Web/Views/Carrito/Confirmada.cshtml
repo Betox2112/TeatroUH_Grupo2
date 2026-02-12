@@ -1,0 +1,75 @@
+﻿@model TeatroUH.Domain.Entities.Reservation
+
+@{
+    ViewData["Title"] = "Reserva confirmada";
+}
+
+<div class="max-w-4xl mx-auto px-6 py-10">
+
+    <div class="rounded-2xl border border-white/10 bg-black/35 p-6 mb-6">
+        <h1 class="text-3xl font-semibold text-white">✅ Reserva confirmada</h1>
+        <p class="text-gray-400 mt-1">
+            Pago en efectivo. Presentate el día de la función con tu número de reserva.
+        </p>
+
+        <div class="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-3 text-sm">
+            <div class="rounded-lg border border-white/10 bg-black/30 p-3">
+                <div class="text-gray-400">Reserva #</div>
+                <div class="text-white font-semibold">@Model.ReservationId</div>
+            </div>
+
+            <div class="rounded-lg border border-white/10 bg-black/30 p-3">
+                <div class="text-gray-400">Cliente</div>
+                <div class="text-white font-semibold">@Model.CustomerName</div>
+            </div>
+
+            <div class="rounded-lg border border-white/10 bg-black/30 p-3">
+                <div class="text-gray-400">Email</div>
+                <div class="text-white font-semibold">@Model.CustomerEmail</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="rounded-2xl border border-white/10 bg-black/35 overflow-hidden">
+        <div class="p-5 border-b border-white/10 text-gray-300 text-sm">
+            Detalle de la reserva
+        </div>
+
+        <div class="divide-y divide-white/10">
+            @foreach (var it in Model.Items)
+            {
+                <div class="p-5 flex items-start justify-between gap-4">
+                    <div>
+                        <div class="text-white font-semibold">
+                            🎭 @(it.Showtime?.Play?.Title ?? "Función")
+                        </div>
+                        <div class="text-gray-400 text-sm mt-1">
+                            @(it.Showtime != null ? it.Showtime.StartDateTime.ToString("dd/MM/yyyy hh:mm tt") : "")
+                        </div>
+                        <div class="text-gray-400 text-sm">
+                            Cantidad: <span class="text-gray-200 font-semibold">@it.Quantity</span>
+                        </div>
+                    </div>
+
+                    <div class="text-right">
+                        <div class="text-gray-400 text-xs">Subtotal</div>
+                        <div class="text-white font-semibold">₡@it.LineTotal.ToString("N2")</div>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <div class="p-6 flex items-center justify-between border-t border-white/10">
+            <div class="text-gray-300">
+                Total a pagar:
+                <span class="text-white text-xl font-semibold">₡@Model.TotalAmount.ToString("N2")</span>
+            </div>
+
+            <a asp-controller="Funciones" asp-action="Index"
+               class="rounded-lg px-5 py-2.5 font-semibold bg-[#C9A24D] text-black hover:brightness-110 transition">
+                Volver a funciones
+            </a>
+        </div>
+    </div>
+
+</div>

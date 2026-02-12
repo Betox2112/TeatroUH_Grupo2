@@ -1,0 +1,65 @@
+﻿@model List<TeatroUH.Domain.Entities.Reservation>
+
+@{
+    ViewData["Title"] = "Mis reservas";
+}
+
+<div class="max-w-5xl mx-auto px-6 py-10">
+
+    <div class="flex items-start justify-between gap-4 mb-8">
+        <div>
+            <h1 class="text-3xl font-semibold text-white">Mis reservas</h1>
+            <p class="text-gray-400 mt-1">Historial de reservas asociadas a tu correo.</p>
+        </div>
+
+        <a asp-controller="Cuenta" asp-action="Index"
+           class="rounded-lg px-5 py-2.5 font-semibold border border-white/15 bg-black/30 text-white hover:bg-black/40 transition">
+            Volver a Mi Cuenta
+        </a>
+    </div>
+
+    @if (Model == null || !Model.Any())
+    {
+        <div class="rounded-2xl border border-white/10 bg-black/35 p-8 text-center">
+            <p class="text-white font-semibold">No tenés reservas todavía.</p>
+            <p class="text-gray-400 mt-1">Podés hacer una reserva desde Funciones.</p>
+            <a asp-controller="Funciones" asp-action="Index"
+               class="mt-5 inline-flex rounded-lg px-5 py-2.5 font-semibold bg-[#C9A24D] text-black hover:brightness-110 transition">
+                Ir a Funciones
+            </a>
+        </div>
+    }
+    else
+    {
+        <div class="rounded-2xl border border-white/10 bg-black/35 overflow-hidden">
+            <div class="divide-y divide-white/10">
+                @foreach (var r in Model)
+                {
+                    <div class="p-5 flex items-start justify-between gap-4">
+                        <div>
+                            <div class="text-white font-semibold">
+                                Reserva #@r.ReservationId
+                            </div>
+                            <div class="text-gray-400 text-sm mt-1">
+                                Fecha: @r.CreatedAt.ToString("dd/MM/yyyy hh:mm tt")
+                            </div>
+                            <div class="text-gray-400 text-sm">
+                                Estado: <span class="text-gray-200 font-semibold">@r.Status</span>
+                            </div>
+                        </div>
+
+                        <div class="text-right">
+                            <div class="text-gray-400 text-xs">Total</div>
+                            <div class="text-white font-semibold">₡@r.TotalAmount.ToString("N2")</div>
+
+                            <a asp-controller="Carrito" asp-action="Confirmada" asp-route-id="@r.ReservationId"
+                               class="mt-2 inline-flex rounded-lg px-4 py-2 font-semibold bg-[#C9A24D] text-black hover:brightness-110 transition">
+                                Ver detalle
+                            </a>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+</div>

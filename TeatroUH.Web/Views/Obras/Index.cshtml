@@ -1,0 +1,111 @@
+﻿@model List<TeatroUH.Domain.Entities.Play>
+
+@{
+    ViewData["Title"] = "Cartelera";
+}
+
+<!-- FONDO CARTELERA -->
+<div class="cartelera-bg">
+    <div class="cartelera-overlay">
+
+        <div class="w-full max-w-6xl mx-auto px-4 py-10">
+
+            <!-- TÍTULO CENTRADO ARRIBA -->
+            <div class="text-center mb-12">
+                <h1 class="text-4xl font-semibold tracking-wide text-white">
+                    Cartelera
+                </h1>
+                <p class="text-gray-300 mt-2">
+                    Obras disponibles para ver y seleccionar funciones.
+                </p>
+                <div class="mt-3 text-sm text-gray-400">
+                    Total:
+                    <strong class="text-white">
+                        @((Model?.Count ?? 0))
+                    </strong>
+                </div>
+            </div>
+
+            @if (Model == null || !Model.Any())
+            {
+                <div class="rounded-xl border border-white/10 bg-black/40 p-6 text-center">
+                    <p class="text-gray-200 font-semibold">
+                        No hay obras registradas.
+                    </p>
+                    <p class="text-gray-400 text-sm mt-1">
+                        Agregá datos o revisá el seed/migración.
+                    </p>
+                </div>
+            }
+            else
+            {
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+                    @foreach (var play in Model)
+                    {
+                        <!-- CARD -->
+                        <article class="rounded-2xl border border-white/10 bg-black/35 backdrop-blur-sm
+                                               overflow-hidden shadow-lg hover:shadow-xl transition
+                                               flex flex-col">
+
+                            <!-- IMAGEN -->
+                            <div class="relative h-44 w-full bg-black/40">
+                                <img src="@(string.IsNullOrWhiteSpace(play.ImageUrl)
+                                                                                  ? "/images/placeholder-play.jpg"
+                                                                                  : play.ImageUrl)"
+                                     alt="@play.Title"
+                                     class="h-full w-full object-cover opacity-90"
+                                     onerror="this.onerror=null;this.src='/images/placeholder-play.jpg';" />
+
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent"></div>
+
+                                <div class="absolute bottom-3 left-3 right-3 text-center">
+                                    <h2 class="text-lg font-semibold text-white leading-tight line-clamp-2">
+                                        @play.Title
+                                    </h2>
+                                </div>
+                            </div>
+
+                            <!-- CONTENIDO -->
+                            <div class="p-5 flex-1 flex flex-col">
+
+                                <p class="text-gray-300 text-sm leading-relaxed line-clamp-3">
+                                    @(string.IsNullOrWhiteSpace(play.Description)
+                                                                ? "Sin descripción."
+                                                                : play.Description)
+                                </p>
+
+                                <div class="mt-4 grid grid-cols-2 gap-3 text-sm">
+                                    <div class="rounded-lg border border-white/10 bg-black/30 p-3 text-center">
+                                        <div class="text-gray-400">Duración</div>
+                                        <div class="text-white font-semibold">@play.DurationMinutes min</div>
+                                    </div>
+
+                                    <div class="rounded-lg border border-white/10 bg-black/30 p-3 text-center">
+                                        <div class="text-gray-400">Clasificación</div>
+                                        <div class="text-white font-semibold">
+                                            @(string.IsNullOrWhiteSpace(play.Rating) ? "-" : play.Rating)
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- BOTÓN ABAJO SIEMPRE -->
+                                <div class="mt-auto pt-5">
+                                    <a asp-controller="Funciones"
+                                       asp-action="PorObra"
+                                       asp-route-playId="@play.PlayId"
+                                       class="w-full inline-flex items-center justify-center
+                                                      rounded-lg py-2.5 font-semibold text-black
+                                                      bg-[#C9A24D] hover:brightness-110 transition">
+                                        Ver funciones
+                                    </a>
+                                </div>
+                            </div>
+                        </article>
+                    }
+                </div>
+            }
+
+        </div>
+    </div>
+</div>

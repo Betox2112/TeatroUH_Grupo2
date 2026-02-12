@@ -1,0 +1,37 @@
+﻿@model TeatroUH.Domain.Entities.NewsItem
+@{
+    ViewData["Title"] = "Detalle";
+    var isAdmin = (bool)(ViewBag.IsAdmin ?? false);
+    var img = string.IsNullOrWhiteSpace(Model.ImageUrl) ? "https://via.placeholder.com/1200x600" : Model.ImageUrl;
+}
+
+<div class="news-detail">
+    <div class="news-detail-hero" style="background-image:url('@img')"></div>
+
+    <div class="news-detail-wrap">
+        <div class="news-detail-top">
+            <a class="btn btn-outline" asp-action="Index">← Volver</a>
+
+            @if (isAdmin)
+            {
+                <div style="display:flex; gap:10px;">
+                    <a class="btn btn-dark" asp-action="Editar" asp-route-id="@Model.NewsItemId">Editar</a>
+                    <span class="news-pill @(Model.IsActive ? "pill-ok" : "pill-off")">
+                        @(Model.IsActive ? "Activa" : "Inactiva")
+                    </span>
+                </div>
+            }
+        </div>
+
+        <h1 class="news-detail-title">@Model.Title</h1>
+        <div class="news-detail-meta">
+            Publicado: <b>@Model.PublishedAt.ToString("dd/MM/yyyy")</b>
+        </div>
+
+        <p class="news-detail-summary">@Model.Summary</p>
+
+        <div class="news-detail-content">
+            @Model.Content
+        </div>
+    </div>
+</div>

@@ -1,0 +1,55 @@
+﻿@* Views/Noticias/Index.cshtml *@
+@model IEnumerable<dynamic>
+@{
+    ViewData["Title"] = "Noticias";
+}
+
+<div class="news-wrap">
+
+    <div class="news-hero">
+        <div>
+            <h1 class="news-h1">Novedades</h1>
+            <p class="news-sub">Comunicados, anuncios y actualizaciones del Teatro Nacional.</p>
+        </div>
+
+        <div class="news-pills">
+            <span class="news-pill">📰 Total: @(Model?.Count() ?? 0)</span>
+            <span class="news-pill">📌 Actualizaciones</span>
+        </div>
+    </div>
+
+    @if (Model == null || !Model.Any())
+    {
+        <div class="news-empty">No hay noticias publicadas por el momento.</div>
+    }
+    else
+    {
+        <div class="news-list">
+            @foreach (var n in Model)
+            {
+                <article class="news-card">
+
+                    <div class="news-top">
+                        <span class="news-date">
+                            @n.PublishedAt.ToString("dd MMM yyyy HH:mm")
+                        </span>
+                    </div>
+
+                    <h3 class="news-title">@n.Title</h3>
+
+                    <p class="news-summary">@n.Summary</p>
+
+                    <div class="news-footer">
+                        <a class="news-link"
+                           asp-controller="Noticias"
+                           asp-action="Detalle"
+                           asp-route-id="@n.NewsItemId">
+                            Leer más <span class="news-arrow">→</span>
+                        </a>
+                    </div>
+
+                </article>
+            }
+        </div>
+    }
+</div>

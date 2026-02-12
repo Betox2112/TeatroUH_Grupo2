@@ -1,0 +1,64 @@
+﻿@model TeatroUH.Application.DTOs.LoginDTO
+@{
+    ViewData["Title"] = "Iniciar sesión";
+}
+
+<div class="account-page">
+    <div class="card card-glow" style="max-width:520px;margin:40px auto;">
+        <div class="card-head">
+            <div class="card-icon">🔐</div>
+            <div>
+                <h2 class="card-title">Iniciar sesión</h2>
+                <p class="card-desc">Accedé a tu cuenta para continuar con tus reservas.</p>
+            </div>
+        </div>
+
+        <!-- Formulario de login -->
+        <form asp-action="Login" method="post" class="form">
+            <!-- Campo de correo -->
+            <div class="form-row">
+                <label class="form-label">Correo</label>
+                <input asp-for="Email" class="form-input" placeholder="correo@ejemplo.com" />
+                <span asp-validation-for="Email" class="text-red-400"></span>
+            </div>
+
+            <!-- Campo de contraseña -->
+            <div class="form-row">
+                <label class="form-label">Contraseña</label>
+                <input asp-for="Password" type="password" class="form-input" placeholder="••••••••" />
+                <span asp-validation-for="Password" class="text-red-400"></span>
+            </div>
+
+            <!-- Google reCAPTCHA -->
+            <div class="form-row">
+                <!-- Aquí se carga el widget de Google -->
+                <div class="g-recaptcha" data-sitekey="6Lc7p2gsAAAAAEE4A0JYOPH142Lqa9ccf2DTopd1"></div>
+                <!-- Mensajes de validación generales -->
+                <span class="text-red-400">
+                    @Html.ValidationSummary()
+                </span>
+            </div>
+
+            <!-- Botón de envío -->
+            <button class="btn btn-gold w-100" type="submit">
+                Entrar
+            </button>
+
+            <!-- Enlace para crear cuenta -->
+            <div class="soft-note" style="margin-top:14px;">
+                <div class="soft-note-text">
+                    ¿No tenés cuenta?
+                    <a asp-action="Register" class="link-gold">Creala aquí</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Sección de scripts -->
+@section Scripts {
+    <!-- Scripts de validación de ASP.NET -->
+    <partial name="_ValidationScriptsPartial" />
+    <!-- Script oficial de Google reCAPTCHA -->
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+}

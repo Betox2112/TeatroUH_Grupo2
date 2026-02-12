@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="TeatroUH.Application/TeatroUH.Application.csproj" />
+  <Project Path="TeatroUH.Domain/TeatroUH.Domain.csproj" />
+  <Project Path="TeatroUH.Infrastructure/TeatroUH.Infrastructure.csproj" />
+  <Project Path="TeatroUH.Web/TeatroUH.Web.csproj" />
+</Solution>
